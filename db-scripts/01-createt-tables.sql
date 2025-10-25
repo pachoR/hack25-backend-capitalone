@@ -9,14 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
    transaction_type transaction_type_enum
 );
 
-CREATE TABLE IF NOT EXISTS users (
-   client_id        varchar(255),
-   purchase_id      varchar(255),
-   invest_id        varchar(255),
-   exec_status      exec_status_enum,
-   transaction_type transaction_type_enum
-);
-
 create table if not exists user_rules (
    id            serial primary key,
    client_id     varchar(255),
