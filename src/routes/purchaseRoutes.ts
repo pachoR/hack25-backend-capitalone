@@ -6,8 +6,8 @@ import {
 
 const router = Router();
 
-router.post('/accounts/:id/purchases', createPurchaseForAccount);
+router.post('/:id/purchases', createPurchaseForAccount);
 
-router.get('/accounts/:id/purchases', getAccountPurchases);
+router.get('/:id/purchases', getAccountPurchases);
 
 export default router;
