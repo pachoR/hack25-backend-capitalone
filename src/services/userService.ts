@@ -27,6 +27,14 @@ export const createSingleUserRule = async (rule: userRules): Promise<userRules> 
     return res.rows[0];
 };
 
+export const modifySingleUserRule = async (rule: userRules): Promise<userRules> => {
+    const res = await query(
+        'UPDATE user_rules SET client_id = $1, description = $2, min_threshold = $3, max_threshold = $4, percentage = $5 WHERE id = $6 RETURNING *',
+        [rule.client_id, rule.description, rule.min_threshold, rule.max_threshold, rule.percentage, rule.id]
+    );
+    return res.rows[0];
+}
+
 export const deleteSingleUserRule = async (id: string): Promise<void> => {
     await query('DELETE FROM user_rules WHERE id = $1', [id]);
 };
