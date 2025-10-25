@@ -47,3 +47,34 @@ export const createTransfer = async (
     }
 
 }
+
+export const createTransferNoDatabase = async (
+    accountId: string,
+    transferData: CreateTransferRequest,
+): Promise<TransferResponse> => {
+    try {
+        console.log('Creating transfer with data:', transferData);
+        const response = await fetch(
+            `${API_BASE_URL}/accounts/${accountId}/transfers?key=${API_KEY}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(transferData),
+            },
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to create transfer');
+        }
+
+        const data: TransferResponse = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error calling external API:', error);
+        throw error;
+    }
+
+}
