@@ -38,6 +38,26 @@ export const createPurchaseForAccount = async (req: Request, res: Response) => {
     res.status(201).json(response);
   } catch (error) {
     console.error('Error creating purchase:', error);
+    
+    if (error instanceof Error) {
+      if (error.message.includes('not found') || error.message.includes('does not exist')) {
+        const response: PurchaseResponse = {
+          code: 404,
+          message: 'Account not found',
+        };
+        return res.status(404).json(response);
+      }
+      
+      if (error.message.includes('validation') || error.message.includes('invalid')) {
+        const response: PurchaseResponse = {
+          code: 400,
+          message: 'Invalid data provided',
+          fields: error.message,
+        };
+        return res.status(400).json(response);
+      }
+    }
+
     const response: PurchaseResponse = {
       code: 500,
       message: 'Internal server error',
@@ -52,6 +72,14 @@ export const getAccountPurchases = async (req: Request, res: Response) => {
 
     const purchases = await getPurchasesByAccount(id);
 
+    if (!purchases || purchases.length === 0) {
+      return res.status(200).json({
+        code: 200,
+        message: 'No purchases found for this account',
+        data: [],
+      });
+    }
+
     res.status(200).json({
       code: 200,
       message: 'Purchases retrieved successfully',
@@ -59,6 +87,25 @@ export const getAccountPurchases = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error fetching purchases:', error);
+    
+    if (error instanceof Error) {
+      if (error.message.includes('not found') || error.message.includes('does not exist')) {
+        const response: PurchaseResponse = {
+          code: 404,
+          message: 'Account not found',
+        };
+        return res.status(404).json(response);
+      }
+      
+      if (error.message.includes('connection') || error.message.includes('database')) {
+        const response: PurchaseResponse = {
+          code: 503,
+          message: 'Service temporarily unavailable',
+        };
+        return res.status(503).json(response);
+      }
+    }
+
     const response: PurchaseResponse = {
       code: 500,
       message: 'Internal server error',
