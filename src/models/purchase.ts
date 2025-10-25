@@ -13,14 +13,27 @@ export interface Purchase {
 export interface CreatePurchaseRequest {
   merchant_id: string;
   medium: string;
-  purchase_date: string;
   amount: number;
-  status: string;
   description: string;
 }
 
 export interface PurchaseResponse {
-  code: number;
   message: string;
-  fields?: string;
+  code: number;
+  objectCreated?: {
+    merchant_id: string;
+    medium: string;
+    purchase_date: string;
+    amount: number;
+    status: string;
+    type: string;
+    payer_id: string;
+    _id: string;
+  };
+}
+
+export const ExecInvestmentStatus = {
+  ON_GOING: 0,
+  EXEC: 1,
+  KILLED: 2
 }

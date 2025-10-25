@@ -2,7 +2,9 @@ import {
   CreatePurchaseRequest,
   Purchase,
   PurchaseResponse,
+  ExecInvestmentStatus
 } from '../models/purchase';
+import { query } from '../util/dbClient';
 
 const API_KEY = process.env.API_KEY;
 const API_BASE_URL = process.env.API_BASE_URL || 'http://api.nessieisreal.com';
@@ -29,6 +31,16 @@ export const createPurchase = async (
     }
 
     const data: PurchaseResponse = await response.json();
+
+    const dbSaving = await query('INSERT INTO users (client_id, purchase_id, invest_id, exec_status) VALUES ($1, $2, $3, $4)',
+      [
+        accountId,
+        data.objectCreated?._id || '',
+        '',
+        ExecInvestmentStatus.ON_GOING
+      ]
+    )
+
     return data;
   } catch (error) {
     console.error('Error calling external API:', error);
