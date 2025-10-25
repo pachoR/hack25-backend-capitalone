@@ -13,16 +13,12 @@ export const createPurchaseForAccount = async (req: Request, res: Response) => {
     if (
       !purchaseData.merchant_id ||
       !purchaseData.medium ||
-      !purchaseData.purchase_date ||
       purchaseData.amount === undefined ||
-      !purchaseData.status ||
       !purchaseData.description
     ) {
       const response: PurchaseResponse = {
         code: 400,
-        message: 'Missing required fields',
-        fields:
-          'merchant_id, medium, purchase_date, amount, status, description',
+        message: 'Missing required fields'
       };
       return res.status(400).json(response);
     }
@@ -32,13 +28,13 @@ export const createPurchaseForAccount = async (req: Request, res: Response) => {
     const response: PurchaseResponse = {
       code: 201,
       message: 'Purchase created successfully',
-      fields: JSON.stringify(purchase),
+      objectCreated: purchase.objectCreated,
     };
 
     res.status(201).json(response);
   } catch (error) {
     console.error('Error creating purchase:', error);
-    
+
     if (error instanceof Error) {
       if (error.message.includes('not found') || error.message.includes('does not exist')) {
         const response: PurchaseResponse = {
@@ -47,12 +43,11 @@ export const createPurchaseForAccount = async (req: Request, res: Response) => {
         };
         return res.status(404).json(response);
       }
-      
+
       if (error.message.includes('validation') || error.message.includes('invalid')) {
         const response: PurchaseResponse = {
           code: 400,
-          message: 'Invalid data provided',
-          fields: error.message,
+          message: 'Invalid data provided'
         };
         return res.status(400).json(response);
       }
@@ -87,7 +82,7 @@ export const getAccountPurchases = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error fetching purchases:', error);
-    
+
     if (error instanceof Error) {
       if (error.message.includes('not found') || error.message.includes('does not exist')) {
         const response: PurchaseResponse = {
@@ -96,7 +91,7 @@ export const getAccountPurchases = async (req: Request, res: Response) => {
         };
         return res.status(404).json(response);
       }
-      
+
       if (error.message.includes('connection') || error.message.includes('database')) {
         const response: PurchaseResponse = {
           code: 503,
