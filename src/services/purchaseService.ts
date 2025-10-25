@@ -4,6 +4,9 @@ import {
   PurchaseResponse,
   ExecInvestmentStatus
 } from '../models/purchase';
+import {
+  TransactionTypes
+} from '../models/const';
 import { query } from '../util/dbClient';
 
 const API_KEY = process.env.API_KEY;
@@ -32,12 +35,13 @@ export const createPurchase = async (
 
     const data: PurchaseResponse = await response.json();
 
-    const dbSaving = await query('INSERT INTO users (client_id, purchase_id, invest_id, exec_status) VALUES ($1, $2, $3, $4)',
+    const dbSaving = await query('INSERT INTO users (client_id, purchase_id, invest_id, exec_status, transaction_type) VALUES ($1, $2, $3, $4, $5)',
       [
         accountId,
         data.objectCreated?._id || '',
         '',
-        ExecInvestmentStatus.ON_GOING
+        ExecInvestmentStatus.ON_GOING,
+        TransactionTypes.PURCHASE
       ]
     )
 
