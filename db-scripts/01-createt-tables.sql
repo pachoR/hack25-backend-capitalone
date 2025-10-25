@@ -5,8 +5,10 @@ create table if not exists users (
 );
 
 create table if not exists user_rules (
-   cliend_id     varchar(255),
+   id            serial primary key,
+   client_id     varchar(255),
+   description   text,
    min_threshold float,
    max_threshold float,
    percentage    float
-)
+);
