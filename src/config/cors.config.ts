@@ -4,7 +4,7 @@ const corsConfig: CorsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = process.env.ALLOWED_ORIGINS
       ? process.env.ALLOWED_ORIGINS.split(',')
-      : ['http://localhost:3000', 'http://localhost:5173'];
+      : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:8081'];
 
     if (!origin || process.env.NODE_ENV === 'development') {
       return callback(null, true);
