@@ -49,3 +49,28 @@ Thumbs.db
 
 # Secrets
 secrets.env
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+# Build artifacts
+dist/
+build/
+*.js
+*.js.map
+*.d.ts
+# TypeScript-specific files
+*.tsbuildinfo
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+# Editor-specific files
+vscode/
+idea/
+*.code-workspace
+# Environment variables
+env
+# OS-specific files
+DS_Store
+Thumbs.db
