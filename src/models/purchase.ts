@@ -33,7 +33,7 @@ export interface PurchaseResponse {
 }
 
 export const ExecInvestmentStatus = {
-  ON_GOING: 0,
-  EXEC: 1,
-  KILLED: 2
-}
+  ON_GOING: 'ON_GOING',
+  EXEC: 'EXEC',
+  KILLED: 'KILLED'
+} as const;
