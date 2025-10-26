@@ -78,3 +78,34 @@ export const getPurchasesByAccount = async (
     throw error;
   }
 };
+
+export const getPurchaseById = async (
+  purchaseId: string
+): Promise<Purchase | null> => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/purchases/${purchaseId}?key=${API_KEY}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    if (response.status === 404) {
+      return null;
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch purchase');
+    }
+
+    const data: Purchase = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error calling external API:', error);
+    throw error;
+  }
+}
