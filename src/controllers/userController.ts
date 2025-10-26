@@ -14,6 +14,7 @@ export const getUsers = async (_: Request, res: Response) => {
 
 export const getUserRules = async (req: Request, res: Response) => {
     const { client_id } = req.params;
+    console.log(client_id);
     try {
         const rules = await getAllUserRules(client_id);
         res.json({ success: true, data: rules });
