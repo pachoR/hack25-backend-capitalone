@@ -2,26 +2,26 @@ module.exports = {
   apps: [
     {
       name: 'backend',
-      script: './dist/index.js',
+      script: './dist/src/index.js',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
       env: {
         NODE_ENV: 'production',
-        PORT: 8080
-      }
+        PORT: 8080,
+      },
     },
     {
       name: 'worker',
-      script: './dist/worker.js',
+      script: './dist/worker/worker.js',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '512M',
       env: {
-        NODE_ENV: 'production'
-      }
-    }
-  ]
+        NODE_ENV: 'production',
+      },
+    },
+  ],
 };
